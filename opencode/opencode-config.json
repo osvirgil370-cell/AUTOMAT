@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.schema.json",
   "model": "openrouter/nvidia/llama-3.1-nemotron-ultra-253b-v1:free",
-  "updated_at": "2026-04-27",
+  "updated_at": "2026-05-04",
   "note": "Mis à jour automatiquement chaque lundi"
 }
