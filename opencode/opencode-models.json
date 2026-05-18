@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-05-11",
-  "count": 35,
+  "updated_at": "2026-05-18",
+  "count": 37,
   "note": "Données issues de sources web publiques (API OpenRouter non accessible depuis l'environnement d'exécution)",
   "models": [
+    {"id": "openrouter/owl-alpha", "name": "OpenRouter: Owl Alpha", "context_length": 1048756},
+    {"id": "deepseek/deepseek-v4-flash:free", "name": "DeepSeek: V4 Flash", "context_length": 1000000},
     {"id": "qwen/qwen3.6-plus:free", "name": "Qwen: Qwen3.6 Plus", "context_length": 1000000},
     {"id": "qwen/qwen3.6-plus-preview:free", "name": "Qwen: Qwen3.6 Plus Preview", "context_length": 1000000},
     {"id": "nvidia/nemotron-3-super-120b-a12b:free", "name": "NVIDIA: Nemotron 3 Super 120B", "context_length": 262144},
