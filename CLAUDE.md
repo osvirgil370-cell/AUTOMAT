@@ -1,97 +1,97 @@
 # CLAUDE.md — AUTOMAT
 
-## Project Overview
+## Apercu du projet
 
-AUTOMAT is an automated monitoring system that tracks free AI model availability on [OpenRouter](https://openrouter.ai). It runs weekly scans (every Monday) to detect new and disappeared models, maintains a curated database, and generates French-language analysis reports.
+AUTOMAT est un systeme de surveillance automatise qui suit la disponibilite des modeles IA gratuits sur [OpenRouter](https://openrouter.ai). Il effectue des scans hebdomadaires (chaque lundi) pour detecter les nouveaux modeles et ceux qui ont disparu, maintient une base de donnees curee et genere des rapports d'analyse en francais.
 
-There is **no application code** in this repository — it is a data-only project consisting of JSON data files and Markdown reports, updated by automated Claude Code sessions.
+Il n'y a **aucun code applicatif** dans ce depot — c'est un projet exclusivement compose de fichiers de donnees JSON et de rapports Markdown, mis a jour par des sessions automatisees Claude Code.
 
-## Repository Structure
+## Structure du depot
 
 ```
 AUTOMAT/
-├── CLAUDE.md                        # This file
+├── CLAUDE.md                        # Ce fichier
 └── opencode/
-    ├── opencode-config.json         # Default model recommendation config
-    ├── opencode-models.json         # Full database of free models
-    └── rapport-YYYY-MM-DD.md        # Weekly analysis reports
+    ├── opencode-config.json         # Configuration du modele recommande
+    ├── opencode-models.json         # Base de donnees complete des modeles gratuits
+    └── rapport-YYYY-MM-DD.md        # Rapports d'analyse hebdomadaires
 ```
 
-## Key Files
+## Fichiers cles
 
 ### `opencode/opencode-config.json`
-- Specifies the currently recommended free model for coding tasks
-- References the `opencode.ai` config schema
-- Updated weekly alongside the models database
+- Specifie le modele gratuit actuellement recommande pour les taches de programmation
+- Reference le schema de configuration `opencode.ai`
+- Mis a jour chaque semaine en meme temps que la base de modeles
 
 ### `opencode/opencode-models.json`
-- Complete list of all free models on OpenRouter
-- Each model entry has: `id`, `name`, `context_length`
-- Sorted by context length (descending)
-- Includes a `count` field and `updated_at` timestamp
+- Liste complete de tous les modeles gratuits sur OpenRouter
+- Chaque entree contient : `id`, `name`, `context_length`
+- Trie par `context_length` (ordre decroissant)
+- Inclut un champ `count` et un horodatage `updated_at`
 
 ### `opencode/rapport-YYYY-MM-DD.md`
-- Weekly Markdown reports in French
-- Consistent structure: recommended model status, new models, disappeared models, top 5 table, total count, sources, technical notes
+- Rapports hebdomadaires en Markdown, rediges en francais
+- Structure coherente : statut du modele recommande, nouveaux modeles, modeles disparus, top 5, total, sources, notes techniques
 
-## Weekly Update Workflow
+## Processus de mise a jour hebdomadaire
 
-Each Monday, a scan is performed:
+Chaque lundi, un scan est effectue :
 
-1. **Collect** current free models from OpenRouter (via public web sources — the API is not accessible from the sandbox environment)
-2. **Compare** against the previous week's `opencode-models.json` to detect additions and removals
-3. **Evaluate** whether the default recommended model should change, using these priority criteria:
-   - Preferred providers: NVIDIA, Google, Meta, OpenAI, Anthropic
-   - Large context window
-   - High parameter count (dense models preferred over MoE)
-   - Strong coding capability
-4. **Update** `opencode-config.json` and `opencode-models.json`
-5. **Generate** a new `rapport-YYYY-MM-DD.md` report
-6. **Commit** with message format: `chore: update free models YYYY-MM-DD`
+1. **Collecter** les modeles gratuits actuels depuis OpenRouter (via des sources web publiques — l'API n'est pas accessible depuis l'environnement sandbox)
+2. **Comparer** avec le `opencode-models.json` de la semaine precedente pour detecter les ajouts et suppressions
+3. **Evaluer** si le modele recommande par defaut doit changer, selon ces criteres de priorite :
+   - Providers privilegies : NVIDIA, Google, Meta, OpenAI, Anthropic
+   - Grande fenetre de contexte
+   - Nombre eleve de parametres (modeles denses preferes aux MoE)
+   - Bonnes capacites en programmation
+4. **Mettre a jour** `opencode-config.json` et `opencode-models.json`
+5. **Generer** un nouveau rapport `rapport-YYYY-MM-DD.md`
+6. **Committer** avec le format de message : `chore: update free models YYYY-MM-DD`
 
 ## Conventions
 
-### Language
-- All reports and notes are written in **French**
-- File names and JSON keys use **English**
+### Langue
+- Tous les rapports et notes sont rediges en **francais**
+- Les noms de fichiers et les cles JSON utilisent l'**anglais**
 
-### File Naming
-- JSON files: kebab-case (`opencode-config.json`)
-- Reports: `rapport-YYYY-MM-DD.md` (ISO date format)
+### Nommage des fichiers
+- Fichiers JSON : kebab-case (`opencode-config.json`)
+- Rapports : `rapport-YYYY-MM-DD.md` (format de date ISO)
 
-### Commit Messages
-- Format: `chore: update free models YYYY-MM-DD`
-- Author: `opencode-routine <osvirgil370@gmail.com>`
-- All commits reference the Claude Code session that produced them
+### Messages de commit
+- Format : `chore: update free models YYYY-MM-DD`
+- Auteur : `opencode-routine <osvirgil370@gmail.com>`
+- Chaque commit reference la session Claude Code qui l'a produit
 
-### Model ID Format
-- Uses OpenRouter's model ID format: `provider/model-name:free`
-- Config file prefixes with `openrouter/` namespace
+### Format des identifiants de modeles
+- Utilise le format OpenRouter : `provider/model-name:free`
+- Le fichier de config prefixe avec le namespace `openrouter/`
 
-### Report Structure
-Every report follows this template:
-1. Title with date
-2. Default model recommendation (previous, new, reasoning)
-3. New models with descriptions
-4. Disappeared models
-5. Top 5 recommended models table (provider, context, parameters)
-6. Total free model count
-7. Sources (with links)
-8. Technical notes about data collection limitations
+### Structure des rapports
+Chaque rapport suit ce modele :
+1. Titre avec la date
+2. Recommandation du modele par defaut (precedent, nouveau, justification)
+3. Nouveaux modeles avec descriptions
+4. Modeles disparus
+5. Tableau top 5 des modeles recommandes (provider, contexte, parametres)
+6. Nombre total de modeles gratuits
+7. Sources (avec liens)
+8. Notes techniques sur les limitations de collecte de donnees
 
-## Data Collection Notes
+## Notes sur la collecte de donnees
 
-- The OpenRouter API (`https://openrouter.ai/api/v1/models`) is **not accessible** from the sandbox execution environment due to network restrictions
-- Data is compiled from publicly available web sources
-- This limitation is documented in each report's technical notes section
+- L'API OpenRouter (`https://openrouter.ai/api/v1/models`) n'est **pas accessible** depuis l'environnement d'execution sandbox en raison de restrictions reseau
+- Les donnees sont compilees a partir de sources web publiques
+- Cette limitation est documentee dans la section notes techniques de chaque rapport
 
-## Important Rules for AI Assistants
+## Regles importantes pour les assistants IA
 
-1. **Preserve the French language** in all reports and notes within data files
-2. **Maintain the existing report structure** — do not reorganize sections
-3. **Sort models by context_length** (descending) in `opencode-models.json`
-4. **Update the `count` field** in `opencode-models.json` when adding/removing models
-5. **Update `updated_at`** timestamps in both JSON files when making changes
-6. **Use the established commit message format** for weekly updates
-7. **Do not fabricate model data** — only include models verified from sources
-8. **Keep the config schema reference** in `opencode-config.json`
+1. **Conserver la langue francaise** dans tous les rapports et notes des fichiers de donnees
+2. **Maintenir la structure existante des rapports** — ne pas reorganiser les sections
+3. **Trier les modeles par `context_length`** (decroissant) dans `opencode-models.json`
+4. **Mettre a jour le champ `count`** dans `opencode-models.json` lors d'ajout/suppression de modeles
+5. **Mettre a jour `updated_at`** dans les deux fichiers JSON lors de modifications
+6. **Utiliser le format de message de commit etabli** pour les mises a jour hebdomadaires
+7. **Ne pas fabriquer de donnees de modeles** — n'inclure que les modeles verifies depuis les sources
+8. **Conserver la reference au schema de config** dans `opencode-config.json`
